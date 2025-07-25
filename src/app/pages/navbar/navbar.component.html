@@ -1,0 +1,20 @@
+<nav
+  class="sticky top-0 z-50 w-full border-b border-gray-100 dark:border-gray-800 bg-white dark:bg-gray-900">
+  <div class="w-[95%] mx-auto px-4">
+    <div class="flex h-16 items-center justify-between">
+      <div class="flex items-center space-x-2">
+        <div class="bg-gradient-to-r from-indigo-700 to-pink-500 bg-clip-text text-transparent dark:text-white">
+          <h1 class="text-xl font-bold">Products Gallery</h1>
+        </div>
+      </div>
+      <button (click)="toggleTheme()" class="h-9 w-9 p-0 hover:bg-gray-100 dark:hover:bg-gray-800 rounded-md flex items-center justify-center"
+        title="Toggle Theme">
+        @if (isDarkMode) {
+        <lucide-icon [img]="SunIcon" class="my-icon w-5 h-5 text-yellow-400" />
+        } @else {
+        <lucide-icon [img]="MoonIcon" class="my-icon w-5 h-5 text-gray-800 dark:text-white" />
+        }
+      </button>
+    </div>
+  </div>
+</nav>

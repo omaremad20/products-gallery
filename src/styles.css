@@ -1,0 +1,103 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/*GLOBAL STYLE*/
+body {
+  overflow-x: hidden !important;
+}
+
+/*HANDLE TOASTR*/
+.privateToastrClass {
+  background-color: #161a28 !important;
+  color: #dbe1ec !important;
+  padding: 0.5rem 0.75rem !important;
+  border-radius: 8px !important;
+  margin: 0.5rem auto !important;
+  font: 500 medium system-ui !important;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2) !important;
+  opacity: 0.95 !important;
+  width: 95% !important;
+  display: flex !important;
+  justify-content: center !important;
+  align-items: center !important;
+  text-align: center !important;
+  animation: backwards ease-in-out 0.5s move;
+}
+
+@keyframes move {
+  from {
+    transform: translateY(50px);
+  }
+
+  to {
+    transform: translateY(0px);
+  }
+}
+
+@media (min-width: 768px) {
+  .toast-bottom-center {
+    top: 1rem !important;
+    bottom: auto !important;
+    left: auto !important;
+    right: 1rem !important;
+    transform: none !important;
+  }
+
+  .privateToastrClass {
+    width: fit-content !important;
+  }
+
+  @keyframes move {
+    from {
+      transform: translateY(-50px);
+    }
+
+    to {
+      transform: translateY(0px);
+    }
+  }
+}
+
+/*STARS*/
+.stars {
+  --star-size: 32px;
+  --star-color: #ccc;
+  --star-filled: gold;
+  --rating: 1;
+  font-size: var(--star-size);
+  font-family: Arial, sans-serif;
+  position: relative;
+  display: inline-block;
+  line-height: 1;
+}
+
+.stars::before {
+  content: '★★★★★';
+  background: linear-gradient(to right,
+      var(--star-filled) calc(var(--rating) / 5 * 100%),
+      var(--star-color) calc(var(--rating) / 5 * 100%));
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+
+/*LOADING-BAR*/
+div.loading {
+  width: 50%;
+  height: 5px;
+  top: 1px;
+  right: 50%;
+  animation: forwards moveLoad linear 1.5s infinite;
+  position: fixed;
+  z-index: 10000;
+}
+
+@keyframes moveLoad {
+  from {
+    transform: translateX(0%);
+  }
+
+  to {
+    transform: translateX(200%);
+  }
+}
