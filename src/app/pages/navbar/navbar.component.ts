@@ -1,10 +1,10 @@
 import { isPlatformBrowser } from '@angular/common';
 import { Component, inject, PLATFORM_ID } from '@angular/core';
+import { RouterLink } from '@angular/router';
 import { LucideAngularModule, MoonIcon, SunIcon } from 'lucide-angular';
-
 @Component({
   selector: 'app-navbar',
-  imports: [LucideAngularModule],
+  imports: [LucideAngularModule, RouterLink],
   templateUrl: './navbar.component.html',
   styleUrl: './navbar.component.css'
 })
@@ -30,14 +30,16 @@ export class NavbarComponent {
     }
   }
   toggleTheme(): void {
-    this.isDarkMode = !this.isDarkMode;
-    const htmlEl = document.documentElement;
-    if (this.isDarkMode) {
-      htmlEl.classList.add('dark');
-      localStorage.setItem('theme', 'dark');
-    } else {
-      htmlEl.classList.remove('dark');
-      localStorage.setItem('theme', 'light');
+    if (isPlatformBrowser(this._PLATFORM_ID)) {
+      this.isDarkMode = !this.isDarkMode;
+      const htmlEl = document.documentElement;
+      if (this.isDarkMode) {
+        htmlEl.classList.add('dark');
+        localStorage.setItem('theme', 'dark');
+      } else {
+        htmlEl.classList.remove('dark');
+        localStorage.setItem('theme', 'light');
+      }
     }
   }
 }

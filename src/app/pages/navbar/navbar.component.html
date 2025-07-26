@@ -4,10 +4,10 @@
     <div class="flex h-16 items-center justify-between">
       <div class="flex items-center space-x-2">
         <div class="bg-gradient-to-r from-indigo-700 to-pink-500 bg-clip-text text-transparent dark:text-white">
-          <h1 class="text-xl font-bold">Products Gallery</h1>
+          <a class="text-xl font-bold" routerLink="/">Products Gallery</a>
         </div>
       </div>
-      <button (click)="toggleTheme()" class="h-9 w-9 p-0 hover:bg-gray-100 dark:hover:bg-gray-800 rounded-md flex items-center justify-center"
+      <button type="button" (click)="toggleTheme()" class="h-9 w-9 p-0 hover:bg-gray-100 dark:hover:bg-gray-800 rounded-md flex items-center justify-center"
         title="Toggle Theme">
         @if (isDarkMode) {
         <lucide-icon [img]="SunIcon" class="my-icon w-5 h-5 text-yellow-400" />

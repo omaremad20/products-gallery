@@ -1,0 +1,17 @@
+<main>
+  @if (isRetry === true) {
+  <div class="loading bg-gradient-to-r from-indigo-700 to-pink-500 dark:from-gray-400 dark:to-gray-500"></div>
+  }
+  <section class=" bg-gray-100 overflow-hidden dark:bg-gray-950">
+    <div class="w-[95%] mx-auto py-5 h-screen flex flex-col justify-center items-center space-y-3">
+      <p class="dark:text-white text-black font-bold text-xl">
+        Connect To the internet
+      </p>
+      <p class="dark:text-white text-black font-medium text-xs">
+        You're offline. Check your connection.
+      </p>
+      <button type="button" (click)="onRetry()"
+        class="rounded-full border hover:bg-gray-200 px-3 py-1 text-blue-500 font-semibold">Retry</button>
+    </div>
+  </section>
+</main>

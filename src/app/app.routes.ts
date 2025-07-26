@@ -3,8 +3,8 @@ import { ProductsComponent } from './pages/products/products.component';
 export const routes: Routes = [
   {
     path: '',
-    title: 'Products',
-    component: ProductsComponent,
+    redirectTo: 'products',
+    pathMatch: 'full',
   },
   {
     path: 'products',

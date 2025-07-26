@@ -1,6 +1,5 @@
 import { Component } from '@angular/core';
-import { ArrowBigRight, ArrowLeft, ChevronRight, Github, HeartIcon, LinkedinIcon, LucideAngularModule, Mail } from 'lucide-angular';
-
+import { ChevronRight, Github, LinkedinIcon, LucideAngularModule, Mail } from 'lucide-angular';
 @Component({
   selector: 'app-footer',
   imports: [LucideAngularModule],
@@ -8,8 +7,8 @@ import { ArrowBigRight, ArrowLeft, ChevronRight, Github, HeartIcon, LinkedinIcon
   styleUrl: './footer.component.css'
 })
 export class FooterComponent {
-  readonly Github = Github
+  readonly Github = Github;
   readonly Mail = Mail;
   readonly LinkedinIcon = LinkedinIcon;
-  readonly ChevronRight = ChevronRight
+  readonly ChevronRight = ChevronRight;
 }

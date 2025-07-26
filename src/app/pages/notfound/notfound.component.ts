@@ -1,6 +1,5 @@
 import { Component } from '@angular/core';
 import { RouterLink } from '@angular/router';
-
 @Component({
   selector: 'app-notfound',
   imports: [RouterLink],
@@ -8,5 +7,4 @@ import { RouterLink } from '@angular/router';
   styleUrl: './notfound.component.css'
 })
 export class NotfoundComponent {
-
 }

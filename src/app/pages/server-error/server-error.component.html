@@ -1,0 +1,24 @@
+<main>
+  <section class="bg-gray-100 overflow-hidden dark:bg-gray-950">
+    <div class="w-[95%] mx-auto py-5 h-screen flex flex-col justify-center items-center space-y-6">
+      <div class="flex flex-col items-center justify-center space-y-4">
+        @if (isRetry === true) {
+        <div class="cursor-pointer animate-spin text-black dark:text-white">
+          <lucide-icon [img]="LoaderCircle" class="w-12 h-12" />
+        </div>
+        <p class="text-center font-medium text-sm text-black dark:text-white">
+          Retrying...
+        </p>
+        }@else if (isRetry === false) {
+        <div class="w-12 h-12 cursor-pointer" (click)="onRetry()">
+          <lucide-icon [img]="RotateCw" class="w-full h-full text-black dark:text-white" />
+        </div>
+        <p class="text-center flex flex-col font-medium text-sm text-black dark:text-white">
+          <span>Something Went Wrong!</span>
+          <span>Please try again later.</span>
+        </p>
+        }
+      </div>
+    </div>
+  </section>
+</main>

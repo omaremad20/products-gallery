@@ -1,4 +1,4 @@
-@if (isLoading === true) {
+@if (!isFetched) {
 <main>
   <section class=" bg-white overflow-hidden dark:bg-gray-950">
     <div class="loading bg-gradient-to-r from-indigo-700 to-pink-500 dark:from-gray-400 dark:to-gray-500"></div>
@@ -36,118 +36,178 @@
     </div>
   </section>
 </main>
-}@else if (isLoading === false) {
+}
+@else if (isLoading === false && serverError === false && isConnected === true) {
 <main>
-  <section class=" bg-gray-100 overflow-hidden dark:bg-gray-950">
+  <section class=" bg-gray-100  overflow-hidden dark:bg-gray-950">
     <div class="w-[95%] mx-auto py-5 space-y-5">
-      <form class="w-full mx-auto">
-        <div class="relative flex">
-          <label for="search-dropdown" class="mb-2 text-sm font-medium text-gray-900 sr-only dark:text-white">Your
-            Email</label>
-          <button id="dropdown-button" (click)="toggleDropdown() ; fetchCategories()"
-            class="shrink-0 z-10 inline-flex items-center py-2.5 px-4 text-sm font-medium text-center text-gray-900 bg-gray-100 border border-gray-300 rounded-s-lg hover:bg-gray-200 focus:ring-4 focus:outline-none focus:ring-gray-100 dark:bg-gray-700 dark:hover:bg-gray-600 dark:focus:ring-gray-700 dark:text-white dark:border-gray-600"
-            type="button">
-            All categories
-            <svg class="w-2.5 h-2.5 ms-2.5" aria-hidden="true" fill="none" viewBox="0 0 10 6">
-              <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                d="m1 1 4 4 4-4" />
-            </svg>
-          </button>
-          <div id="dropdown" #dropdownMenu
-            class="absolute top-full left-0 mt-1 hidden bg-white divide-y divide-gray-100 rounded-md shadow-md w-44 z-20 dark:bg-gray-700">
-            <ul class="py-2 text-sm text-gray-700 dark:text-gray-200 max-h-[50vh] overflow-y-auto">
-              @for (categorie of categories; track $index) {
-              <li>
-                <button type="button"
-                  class="inline-flex w-full px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white">{{categorie}}</button>
-              </li>
-              }
-            </ul>
-          </div>
-          <div class="relative w-full">
-            <input type="search" id="search-dropdown"
-              class="block p-2.5 w-full z-20 text-sm text-gray-900 bg-gray-50 rounded-e-lg border-s-gray-50 border-s-2 border border-gray-300 focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:border-s-gray-700  dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:border-blue-500"
-              placeholder="Search" />
-            <button type="submit"
-              class="absolute top-0 end-0 p-2.5 text-sm font-medium h-full text-white bg-blue-700 rounded-e-lg border border-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">
-              <svg class="w-4 h-4" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none"
-                viewBox="0 0 20 20">
-                <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                  d="m19 19-4-4m0-7A7 7 0 1 1 1 8a7 7 0 0 1 14 0Z" />
-              </svg>
-              <span class="sr-only">Search</span>
-            </button>
+      <form [formGroup]="search">
+        <div class="w-full  mx-auto ">
+          <div
+            class="dark:bg-gray-900 rounded-xl shadow-lg border border-gray-200 dark:border-gray-800 px-5 pb-4 overflow-y-hidden">
+            <div class="flex justify-between mb-1.5 items-center">
+              <h1 class="text-xl dark:text-white font-bold my-2">Search</h1>
+              <label class="inline-flex items-center cursor-pointer space-x-2">
+                @if (search.get('rate')?.value === true) {
+                <span class="ms-3 text-sm font-medium text-gray-900 dark:text-gray-300">Top Rated</span>
+                }@else {
+                <span class="ms-3 text-sm font-medium text-gray-900 dark:text-gray-300 opacity-50">Top Rated</span>
+                }
+                <input type="checkbox" formControlName="rate" [value]="false" class="sr-only peer">
+                <div
+                  class="relative w-11 h-6 bg-gray-200 peer-focus:outline-none peer-focus:ring-4 peer-focus:ring-blue-300 dark:peer-focus:ring-blue-800 rounded-full peer dark:bg-gray-700 peer-checked:after:translate-x-full rtl:peer-checked:after:-translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:start-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all dark:border-gray-600 peer-checked:bg-blue-600 dark:peer-checked:bg-blue-600">
+                </div>
+              </label>
+            </div>
+            <div class="flex flex-col lg:flex-row  ">
+              <div class="flex  w-full justify-between items-center gap-4 ">
+                <div class="relative w-full ">
+                  <lucide-icon [img]="Search"
+                    class="my-icon absolute left-1.5 top-1/2 -translate-y-1/2 text-gray-400 h-4 w-4 " />
+                  <input id="search" type="search" placeholder="Enter product name..." formControlName="search"
+                    class="pl-10 h-11 pe-2 outline-0 w-full border border-gray-300 rounded-lg text-sm dark:bg-gray-800 dark:text-white focus:ring-blue-500 focus:border-blue-500" />
+                </div>
+                <button (click)="showFilters();"
+                  class="py-2.5 self-end px-5 bg-blue-600 hover:bg-blue-700 text-white rounded-lg text-sm flex items-center gap-2">
+                  @if (isFilters) {
+                  <lucide-icon [img]="ArrowUpNarrowWide" class="my-icon " />
+                  }@else {
+                  <lucide-icon [img]="ArrowDownNarrowWide" class="my-icon " />
+                  }
+                </button>
+              </div>
+            </div>
+            @if (isFilters) {
+            <div class="anmiate-up">
+              <div
+                class="mt-6 p-4 grid grid-cols-1 gap-6 md:grid-cols-2 lg:grid-cols-3 w-full bg-gray-50 dark:bg-gray-800  rounded-lg">
+                <div class="space-y-2">
+                  <label class="text-sm font-medium text-gray-700 dark:text-gray-200">Category</label>
+                  <select formControlName="category"
+                    class="h-11 w-full border border-gray-300 rounded-lg text-sm px-4 bg-white dark:bg-gray-700 dark:text-white focus:ring-blue-500 focus:border-blue-500">
+                    <option value="all">All Categories</option>
+                    @for (categorie of categories; track $index) {
+                    <option [value]="categorie">
+                      {{categorie}}
+                    </option>
+                    }
+                  </select>
+                </div>
+                <div class="space-y-2  ">
+                  <label class="text-sm font-medium text-gray-700 dark:text-gray-200">Sort Price by</label>
+                  <select formControlName="sortPrice"
+                    class="h-11 w-full border border-gray-300 rounded-lg text-sm px-4 bg-white dark:bg-gray-700 dark:text-white focus:ring-blue-500 focus:border-blue-500">
+                    <option selected disabled value="">Sort Price</option>
+                    @if (search.get('sortPrice')?.value !== '') {
+                    <option value="">Reset</option>
+                    }
+                    @for (sortCase of sortPriceOptions; track $index) {
+                    <option [value]="sortCase">{{sortCase}}
+                    </option>
+                    }
+                  </select>
+                </div>
+                <div class="space-y-2  ">
+                  <label class="text-sm font-medium text-gray-700 dark:text-gray-200">Sort Chars By</label>
+                  <select formControlName="sortChars"
+                    class="h-11 w-full border border-gray-300 rounded-lg text-sm px-4 bg-white dark:bg-gray-700 dark:text-white focus:ring-blue-500 focus:border-blue-500">
+                    <option selected disabled value="">Sort Chars</option>
+                    @if (search.get('sortChars')?.value !== '') {
+                    <option value="">Reset</option>
+                    }
+                    @for (sortCase of sortCharsOptions; track $index) {
+                    <option [value]="sortCase">{{sortCase}}</option>
+                    }
+                  </select>
+                </div>
+              </div>
+              <div class="w-full flex justify-center pt-4 items-center">
+                <button (click)="resetAsDefult()"
+                  class="bg-blue-600 text-sm shadow-lg font-semibold capitalize rounded-lg hover:bg-blue-700 duration-100 ease-in-out transition-colors py-2 text-white w-fit px-4">reset
+                  all</button>
+              </div>
+            </div>
+            }
           </div>
         </div>
       </form>
-      <div class="grid grid-cols-1 gap-6 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-5">
-        @for (product of products; track product.id) {
-        <a [routerLink]="['/productdetails', product.id]" [title]="'view ' + product.title + ' product'">
-          <div class="h-full cursor-pointer flex flex-row md:flex-col items-center overflow-hidden group
+      @if (products.length <= 0) { <div class="h-screen flex justify-center items-start">
+        <div
+          class="flex items-center justify-center p-4 my-5 text-sm text-red-800 border border-red-300 rounded-lg bg-red-50 dark:bg-gray-800 dark:text-red-400 dark:border-red-800"
+          role="alert">
+          <svg class="shrink-0 inline w-4 h-4 me-3" aria-hidden="true" xmlns="http://www.w3.org/2000/svg"
+            fill="currentColor" viewBox="0 0 20 20">
+            <path
+              d="M10 .5a9.5 9.5 0 1 0 9.5 9.5A9.51 9.51 0 0 0 10 .5ZM9.5 4a1.5 1.5 0 1 1 0 3 1.5 1.5 0 0 1 0-3ZM12 15H8a1 1 0 0 1 0-2h1v-3H8a1 1 0 0 1 0-2h2a1 1 0 0 1 1 1v4h1a1 1 0 0 1 0 2Z" />
+          </svg>
+          <div>
+            <span class="font-medium">No Results!</span> Change a few things up and try submitting again.
+          </div>
+        </div>
+    </div>
+    }@else if (products.length> 0) {
+    <div class="min-h-screen">
+      @if (products.length < allProducts.length) { <h1 class="font-semibold text-lg my-2 dark:text-white">Results
+        ({{products.length}})
+        </h1>
+        }
+        <div class="grid grid-cols-1 gap-6 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-5">
+          @for (product of products; track product.id) {
+          <a [routerLink]="['/productdetails', product.id]" [title]="'view ' + product.title + ' product'">
+            <div class="h-full cursor-pointer flex flex-row md:flex-col items-center overflow-hidden group
       hover:shadow-lg transition-all duration-100 border border-pink-500 dark:border-gray-600
       rounded-lg bg-white dark:bg-gray-900">
-            <div class="relative w-1/3 md:w-full aspect-square md:pt-[100%] overflow-hidden">
-              <img [src]='product.image'
-                class="absolute top-0 left-0 w-full h-full object-cover group-hover:scale-105 transition-transform duration-300"
-                [alt]="product.title" />
-            </div>
-            <div class="w-2/3 md:w-full flex flex-col justify-between h-full">
-              <div class="flex-grow p-4">
-                <div class="flex justify-between items-start gap-2 mb-2">
-                  <span class="bg-gray-200 dark:bg-gray-700 text-gray-800 dark:text-white
+              <div class="relative w-1/3 md:w-full aspect-square md:pt-[100%] overflow-hidden">
+                <img [src]='product.image'
+                  class="absolute top-0 left-0 w-full h-full object-cover group-hover:scale-105 transition-transform duration-300"
+                  [alt]="product.title" />
+              </div>
+              <div class="w-2/3 md:w-full flex flex-col justify-between h-full">
+                <div class="flex-grow p-4">
+                  <div class="flex justify-between items-start gap-2 mb-2">
+                    <span class="bg-gray-200 dark:bg-gray-700 text-gray-800 dark:text-white
             text-xs px-2 py-1 rounded transition-colors duration-300">
-                    {{ product.category }}
-                  </span>
-                  <span class="text-lg font-bold text-indigo-600 dark:text-indigo-400 transition-colors duration-300">
-                    ${{ product.price }}
-                  </span>
-                </div>
-                <h3
-                  class="text-lg font-semibold line-clamp-2 text-gray-900 dark:text-white transition-colors duration-300">
-                  {{ product.title }}
-                </h3>
-                <p class="text-sm text-gray-600 dark:text-gray-400 mt-1 line-clamp-3 transition-colors duration-300">
-                  {{ product.description }}
-                </p>
-              </div>
-              <div class="px-4 pb-4">
-                <div class="flex items-center justify-between">
-                  <div class="flex items-center gap-1">
-                    <div class="stars" [style.--rating]="product.rating.rate"></div>
-                    <p class="text-gray-500 dark:text-gray-400 text-xs transition-colors duration-300">
-                      ({{ product.rating.rate }})
-                    </p>
+                      {{ product.category }}
+                    </span>
+                    <span class="text-lg font-bold text-indigo-600 dark:text-indigo-400 transition-colors duration-300">
+                      ${{ product.price }}
+                    </span>
                   </div>
-                  <span class="text-xs text-gray-500 dark:text-gray-400 transition-colors duration-300">
-                    ({{ product.rating.count }} reviews)
-                  </span>
+                  <h3
+                    class="text-lg font-semibold line-clamp-2 text-gray-900 dark:text-white transition-colors duration-300">
+                    {{ product.title }}
+                  </h3>
+                  <p class="text-sm text-gray-600 dark:text-gray-400 mt-1 line-clamp-3 transition-colors duration-300">
+                    {{ product.description }}
+                  </p>
+                </div>
+                <div class="px-4 pb-4">
+                  <div class="flex items-center justify-between">
+                    <div class="flex items-center gap-1">
+                      <div class="stars" [style.--rating]="product.rating.rate"></div>
+                      <p class="text-gray-500 dark:text-gray-400 text-xs transition-colors duration-300">
+                        ({{ product.rating.rate }})
+                      </p>
+                    </div>
+                    <span class="text-xs text-gray-500 dark:text-gray-400 transition-colors duration-300">
+                      ({{ product.rating.count }} reviews)
+                    </span>
+                  </div>
                 </div>
               </div>
             </div>
-          </div>
-        </a>
-        }
-      </div>
+          </a>
+          }
+        </div>
+    </div>
+    }
     </div>
   </section>
 </main>
 }
-@if (retryConnection === true) {
-<main>
-  <section class=" bg-gray-100 overflow-hidden dark:bg-gray-950">
-    <div class="w-[95%] mx-auto py-5 h-screen flex flex-col justify-center items-center space-y-3">
-      <p class="dark:text-white text-black font-bold text-xl">
-        Connect To the internet
-      </p>
-      <p class="dark:text-white text-black font-medium text-xs">
-        You're offline. Check your connection.
-      </p>
-      <button (click)="retryFetchProducts()" class="rounded-full border hover:bg-gray-200 px-3 py-1 text-blue-500 font-semibold">Retry</button>
-    </div>
-  </section>
-</main>
+@if (isConnected === false && isConnected === false) {
+<app-nointernet-handler [onRetry]="retryFetchProducts"></app-nointernet-handler>
 }
-<!-- <div class="w-1/12 h-1/12  cursor-pointer">
-        <lucide-icon [img]="RotateCw" class="w-full h-full text-black dark:text-white " /> -->
-<!-- <lucide-icon [img]="LoaderCircle" class="w-full animate-spin h-full text-black dark:text-white " /> -->
-<!-- </div> -->
+@else if (serverError === true && isConnected === true) {
+<app-server-error [onRetry]="retryFetchProducts" [isRetry]="isRetry"></app-server-error>
+}
