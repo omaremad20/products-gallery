@@ -52,7 +52,14 @@
       </div>
     </div>
     <div class="border-t border-gray-200 dark:border-gray-800 mt-8 pt-4 text-center">
-      <p class="text-xs text-gray-500 dark:text-gray-400">Made with ❤ by Omar Emad.</p>
+      <div class="text-xs space-x-1 justify-center items-center flex text-gray-500 dark:text-gray-400">
+        <span>Made with</span>
+         <lucide-icon [img]="HeartIcon"
+          class="w-4 h-4 text-red-700 fill-red-700" />
+          <span>
+            by Omar Emad.
+          </span>
+      </div>
     </div>
   </div>
 </footer>

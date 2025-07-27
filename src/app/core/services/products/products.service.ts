@@ -8,7 +8,7 @@ import { Observable } from 'rxjs';
 })
 export class ProductsService {
   private _HttpClient = inject(HttpClient);
-  baseUrl: string = enviroment.baseUrl;
+  private baseUrl: string = enviroment.baseUrl;
   fetchProducts(): Observable<any> {
     return this._HttpClient.get(`${this.baseUrl}products`)
   }

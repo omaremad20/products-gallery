@@ -9,7 +9,6 @@ import { ProductdetailsService } from '../../core/services/productdetails/produc
 import { NointernetHandlerComponent } from "../nointernet-handler/nointernet-handler.component";
 import { NotfoundComponent } from "../notfound/notfound.component";
 import { ServerErrorComponent } from "../server-error/server-error.component";
-
 @Component({
   selector: 'app-productdetails',
   imports: [LucideAngularModule, NointernetHandlerComponent, ServerErrorComponent, NotfoundComponent],
@@ -44,7 +43,6 @@ export class ProductdetailsComponent implements OnInit, OnDestroy {
   isLoading!: boolean;
   isConnected!: boolean;
   serverError!: boolean;
-  productFound: boolean = true;
   ngOnInit(): void {
     this.fetchProductId();
     if (isPlatformBrowser(this._PLATFORM_ID)) {

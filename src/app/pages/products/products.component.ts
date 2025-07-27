@@ -2,7 +2,7 @@ import { isPlatformBrowser } from '@angular/common';
 import { Component, inject, OnDestroy, OnInit, PLATFORM_ID } from '@angular/core';
 import { FormControl, FormGroup, FormsModule, ReactiveFormsModule, } from '@angular/forms';
 import { RouterLink } from '@angular/router';
-import { ArrowDownNarrowWide, ArrowUpNarrowWide, LucideAngularModule, Search } from 'lucide-angular';
+import { ArrowDownNarrowWide, ArrowUpNarrowWide, CircleAlert, LucideAngularModule, Search } from 'lucide-angular';
 import { ToastrService } from 'ngx-toastr';
 import { Subscription } from 'rxjs';
 import { Product } from '../../core/interfaces/productinterface/product';
@@ -19,6 +19,7 @@ export class ProductsComponent implements OnInit, OnDestroy {
   readonly ArrowDownNarrowWide = ArrowDownNarrowWide;
   readonly ArrowUpNarrowWide = ArrowUpNarrowWide;
   readonly Search = Search;
+  readonly CircleAlert = CircleAlert;
   readonly sortPriceOptions: string[] = ['highprice', 'lowprice'];
   readonly sortCharsOptions: string[] = ['a-z', 'z-a'];
   private _ProductsService = inject(ProductsService);

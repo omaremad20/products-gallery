@@ -1,7 +1,7 @@
 import { isPlatformBrowser } from '@angular/common';
 import { Component, inject, PLATFORM_ID } from '@angular/core';
 import { RouterLink } from '@angular/router';
-import { LucideAngularModule, MoonIcon, SunIcon } from 'lucide-angular';
+import { CircleAlert, LucideAngularModule, MoonIcon, SunIcon } from 'lucide-angular';
 @Component({
   selector: 'app-navbar',
   imports: [LucideAngularModule, RouterLink],
@@ -9,7 +9,7 @@ import { LucideAngularModule, MoonIcon, SunIcon } from 'lucide-angular';
   styleUrl: './navbar.component.css'
 })
 export class NavbarComponent {
-  private _PLATFORM_ID = inject(PLATFORM_ID)
+  private _PLATFORM_ID = inject(PLATFORM_ID);
   readonly SunIcon = SunIcon;
   readonly MoonIcon = MoonIcon;
   isDarkMode = false;
